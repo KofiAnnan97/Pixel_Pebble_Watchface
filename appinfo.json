@@ -1,0 +1,67 @@
+{
+    "appKeys": {
+        "KEY_TEMPERATURE": 0
+    },
+    "capabilities": [
+        ""
+    ],
+    "companyName": "Elinam Gbordzoe",
+    "longName": "Pixel_WatchFace",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/WatchfaceBackground",
+                "name": "pixel_face",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/ChargedBattery",
+                "name": "CHARGED_Battery",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/FullBattery",
+                "name": "FULL_Battery",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/67PercentBattery",
+                "name": "67_Battery",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/33PercentBattery",
+                "name": "33_Battery",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/LowBattery",
+                "name": "LOW_Battery",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/LostBluetoothSignal",
+                "name": "LOST_Bluetooth_Signal",
+                "targetPlatforms": null,
+                "type": "png"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "Pixel ",
+    "targetPlatforms": [
+        "basalt"
+    ],
+    "uuid": "22ac8001-1372-4041-8884-36a4c562b69f",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
