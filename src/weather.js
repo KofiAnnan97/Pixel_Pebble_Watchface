@@ -1,4 +1,4 @@
-var myAPIKey = '';  //get an APIKey from OpenWeatherMap.org
+var myAPIKey = '10e3eccd395be6750906b17164863a0f'; //get APIKey from OPenWeatherMap.org
 
 var xhrRequest = function (url, type, callback) {
   var xhr = new XMLHttpRequest();

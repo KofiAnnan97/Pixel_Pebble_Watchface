@@ -11,6 +11,13 @@
     "resources": {
         "media": [
             {
+                "file": "images/Icon",
+                "menuIcon": true,
+                "name": "Icon_Image",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
                 "file": "images/WatchfaceBackground",
                 "name": "pixel_face",
                 "targetPlatforms": null,
