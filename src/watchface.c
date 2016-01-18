@@ -105,7 +105,7 @@ static void battery_indicator(BatteryChargeState charge_state){
 static void bluetooth_callback(bool connected){
   layer_set_hidden(bitmap_layer_get_layer(s_bluetooth_layer), connected);
   layer_set_hidden(text_layer_get_layer(s_weather_layer), !connected);
-
+  
    if(!connected){
     vibes_double_pulse();
   }
@@ -207,12 +207,6 @@ static void main_window_load(Window *window){
   //Creating initial window
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
-  s_canvas_layer = layer_create(bounds);
-  layer_add_child(window_layer, s_canvas_layer);
-
-  
-  s_center = grect_center_point(&GRect(71,98,2,2));
-  layer_set_update_proc(s_canvas_layer, update_proc);
 
   //Adding the background image
   s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_pixel_face);
@@ -220,6 +214,10 @@ static void main_window_load(Window *window){
   bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap);
   layer_add_child(window_layer, bitmap_layer_get_layer(s_background_layer));
 
+  s_center = grect_center_point(&GRect(71,98,2,2));
+  s_canvas_layer = layer_create(bounds);
+  layer_set_update_proc(s_canvas_layer, update_proc);
+  layer_add_child(window_layer, s_canvas_layer);
   
   //Adding date (DD/MM)
   s_date_layer = text_layer_create(GRect(70, 8, 50, 30));
