@@ -220,14 +220,14 @@ static void main_window_load(Window *window){
   layer_add_child(window_layer, s_canvas_layer);
   
   //Adding date (DD/MM)
-  s_date_layer = text_layer_create(GRect(70, 8, 50, 30));
+  s_date_layer = text_layer_create(GRect(70, 6, 50, 30));
   text_layer_set_background_color(s_date_layer, GColorClear);
   text_layer_set_text_color(s_date_layer, GColorWhite);
   text_layer_set_font(s_date_layer,fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
   layer_add_child(window_layer, text_layer_get_layer(s_date_layer));
  
   //Adding name of specific day
-  s_day_layer = text_layer_create(GRect(5, 8, 50, 30));
+  s_day_layer = text_layer_create(GRect(5, 6, 50, 30));
   text_layer_set_background_color(s_day_layer, GColorClear);
   text_layer_set_text_color(s_day_layer, GColorWhite);
   text_layer_set_font(s_day_layer,fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
@@ -240,7 +240,7 @@ static void main_window_load(Window *window){
   
   //Adding bluetooth image
   s_bluetooth_bitmap = gbitmap_create_with_resource(RESOURCE_ID_LOST_Bluetooth_Signal);
-  s_bluetooth_layer = bitmap_layer_create(GRect(113, 135, 25, 25));
+  s_bluetooth_layer = bitmap_layer_create(GRect(115, 140, 25, 25));
   bitmap_layer_set_bitmap(s_bluetooth_layer, s_bluetooth_bitmap);
   layer_add_child(window_layer, bitmap_layer_get_layer(s_bluetooth_layer));
 
