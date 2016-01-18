@@ -17,6 +17,7 @@ function locationSuccess(pos) {
     function(responseText) {
       var json = JSON.parse(responseText);
 
+      //Fix fahrenheit
       var temperature = json.main.temp - 273.15;
       var fahrenheit = Math.round((temperature*9/5)+32);
       console.log("Temperature is " + fahrenheit);

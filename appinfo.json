@@ -11,9 +11,9 @@
     "resources": {
         "media": [
             {
-                "file": "images/Icon",
+                "file": "images/Fun_Icon",
                 "menuIcon": true,
-                "name": "Icon_Image",
+                "name": "Fun_Icon_Image",
                 "targetPlatforms": null,
                 "type": "bitmap"
             },
