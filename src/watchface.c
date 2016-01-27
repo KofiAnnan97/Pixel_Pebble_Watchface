@@ -24,8 +24,10 @@ static GBitmap *s_background_bitmap,
                *s_battery_bitmap;
 static Layer *s_canvas_layer;
 
+GFont pixel_font;
+
 static int s_battery_level;
-static bool s_plugged_in;
+int disconnect_count = 0;
 
 GPoint s_center;
 static Time s_last_time, s_anim_time;
@@ -79,14 +81,14 @@ static void animate(int duration, int delay, AnimationImplementation *implementa
 //Determines what battery image will be displayed on the watch
 static void battery_indicator(BatteryChargeState charge_state){
   s_battery_level = charge_state.charge_percent;
-  s_plugged_in = charge_state.is_plugged;
-
-  //use (MINUTE_UNIT % 30 == 0) for final build
-  if(MINUTE_UNIT % 2 == 0){
-    //work on integrating charged battery for when battery is fully charged but still  plugged in
-    if(s_battery_level >= 67){
-        //get Full battery picture
+  //work on integrating charged battery for when battery is fully charged but still  plugged in
+      
+     //get Full battery picture
+    /*if( charge_state.is_charging){
+        s_battery_bitmap = gbitmap_create_with_resource(RESOURCE_ID_CHARGED_Battery);
+    } else*/ if(s_battery_level >= 67){
         s_battery_bitmap = gbitmap_create_with_resource(RESOURCE_ID_FULL_Battery);
+      
     } else if(s_battery_level >= 34 && s_battery_level <= 66){
         //get 67% battery picture
         s_battery_bitmap = gbitmap_create_with_resource(RESOURCE_ID_67_Battery);
@@ -97,18 +99,19 @@ static void battery_indicator(BatteryChargeState charge_state){
         //get Low battery picture
         s_battery_bitmap = gbitmap_create_with_resource(RESOURCE_ID_LOW_Battery);
     }
-  }
+  //}
   bitmap_layer_set_bitmap(s_battery_layer, s_battery_bitmap);
 }
 
 //determines whether the bluetooth is on 
 static void bluetooth_callback(bool connected){
+  
   layer_set_hidden(bitmap_layer_get_layer(s_bluetooth_layer), connected);
   layer_set_hidden(text_layer_get_layer(s_weather_layer), !connected);
   
-   if(!connected){
-    vibes_double_pulse();
-  }
+  if(!connected){
+     vibes_double_pulse();
+  }  
 }
 
 static int hours_to_minutes(int hours_out_of_12) {
@@ -219,22 +222,27 @@ static void main_window_load(Window *window){
   layer_set_update_proc(s_canvas_layer, update_proc);
   layer_add_child(window_layer, s_canvas_layer);
   
+  //Normal font choice --> fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD
+  pixel_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_Pixel_Letters_Full_24));
+  
+  
   //Adding date (DD/MM)
-  s_date_layer = text_layer_create(GRect(70, 6, 50, 30));
+  s_date_layer = text_layer_create(GRect(70, 0, 70, 25));
   text_layer_set_background_color(s_date_layer, GColorClear);
   text_layer_set_text_color(s_date_layer, GColorWhite);
-  text_layer_set_font(s_date_layer,fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
+  text_layer_set_font(s_date_layer, pixel_font);
   layer_add_child(window_layer, text_layer_get_layer(s_date_layer));
  
   //Adding name of specific day
-  s_day_layer = text_layer_create(GRect(5, 6, 50, 30));
+  s_day_layer = text_layer_create(GRect(5, 0, 40, 25));
   text_layer_set_background_color(s_day_layer, GColorClear);
   text_layer_set_text_color(s_day_layer, GColorWhite);
-  text_layer_set_font(s_day_layer,fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
+  text_layer_set_font(s_day_layer, pixel_font);
   layer_add_child(window_layer, text_layer_get_layer(s_day_layer));
   
   //Adding battery image
   s_battery_layer = bitmap_layer_create(GRect(3, 150, 32, 15));
+  bitmap_layer_set_background_color(s_battery_layer, GColorBlue);
   layer_add_child(window_layer, bitmap_layer_get_layer(s_battery_layer));
 
   
@@ -246,11 +254,11 @@ static void main_window_load(Window *window){
 
 
   //Displays temerature of geographic location (fahrenheit) 
-  s_weather_layer = text_layer_create(GRect(105, 145, 40, 20));
+  s_weather_layer = text_layer_create(GRect(108, 140, 35, 25));
   text_layer_set_background_color(s_weather_layer, GColorClear);
   text_layer_set_text_color(s_weather_layer, GColorWhite);
   text_layer_set_text(s_weather_layer, "...");
-  text_layer_set_font(s_weather_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
+  text_layer_set_font(s_weather_layer, pixel_font);
   text_layer_set_text_alignment(s_weather_layer, GTextAlignmentCenter);
   layer_add_child(window_layer, text_layer_get_layer(s_weather_layer));
 }
@@ -266,6 +274,8 @@ static void main_window_unload(Window *window){
   
   text_layer_destroy(s_day_layer);
   
+  fonts_unload_custom_font(pixel_font);
+  
   gbitmap_destroy(s_battery_bitmap);
   bitmap_layer_destroy(s_battery_layer);
   
@@ -273,6 +283,7 @@ static void main_window_unload(Window *window){
   bitmap_layer_destroy(s_bluetooth_layer);
   
   text_layer_destroy(s_weather_layer);
+  
 }
 
 static void init(){

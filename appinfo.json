@@ -11,6 +11,12 @@
     "resources": {
         "media": [
             {
+                "file": "fonts/PixellettersFull.ttf",
+                "name": "FONT_Pixel_Letters_Full_24",
+                "targetPlatforms": null,
+                "type": "font"
+            },
+            {
                 "file": "images/Fun_Icon",
                 "menuIcon": true,
                 "name": "Fun_Icon_Image",
